@@ -14,6 +14,7 @@ const products = [
       "Discover a world of vibrant flavors with our premium juice selection.",
     numberColor: "#30A100",
     image: cheekyLine,
+    circleColor: "#A1CD57",
     backgroundColor: "#CFCF8D4D",
   },
   {
@@ -23,6 +24,7 @@ const products = [
       "Discover a world of vibrant flavors with our premium juice selection.",
     numberColor: "#FF960D",
     image: orangeCrush,
+    circleColor: "#FF960D",
     backgroundColor: "#DEBE6E4A",
   },
   {
@@ -32,6 +34,7 @@ const products = [
       "Discover a world of vibrant flavors with our premium juice selection.",
     numberColor: "#CD2520",
     image: strawberryYum,
+    circleColor: "#CD2520",
     backgroundColor: "#DC8D764A",
   },
   {
@@ -41,6 +44,7 @@ const products = [
       "Discover a world of vibrant flavors with our premium juice selection.",
     numberColor: "#60449B",
     image: blackberryBlast,
+    circleColor: "#60449B",
     backgroundColor: "#947FBE4D",
   },
 ];

@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from "react";
 import Button from "../Button/Button";
 import styles from "./FeatureCard.module.scss";
 
@@ -7,19 +8,48 @@ const FeatureCard = ({
   title = "",
   description = "",
   image = null,
+  circleColor = "",
   backgroundColor = "",
   selected = null,
   onClick,
 }) => {
+  const cardRef = useRef(null);
+  const [cardWidth, setCardWidth] = useState(0);
+
+  useLayoutEffect(() => {
+    if (!cardRef.current) return;
+
+    const observer = new ResizeObserver(() => {
+      const { width } = cardRef.current.getBoundingClientRect();
+
+      if (width) setCardWidth(width);
+    });
+
+    observer.observe(cardRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div
-      onClick={onClick}
+      ref={cardRef}
       className={styles.featureCard}
-      style={selected ? { backgroundColor: backgroundColor } : {}}
+      // style={selected ? { backgroundColor: backgroundColor } : {}}
+      data-width={cardWidth}
+      style={{
+        "--card-width": `${cardWidth}px`,
+        "--circle-color": circleColor,
+        ...(selected ? { backgroundColor: backgroundColor } : {}),
+      }}
     >
-      <div className={styles.cardContent}>
+      <div className={styles.cardContent} onClick={onClick}>
         {selected ? (
-          <CardImage src={image} alt={title} className={styles.cardImage} />
+          <CardImage
+            src={image}
+            alt={title}
+            cardWidth={cardWidth}
+            circleColor={circleColor}
+          />
         ) : null}
 
         <h2 className={styles.cardNumber} style={{ color: numberColor }}>
@@ -38,6 +68,16 @@ const FeatureCard = ({
 
 export default FeatureCard;
 
-const CardImage = ({ src, alt, className }) => {
-  return <img src={src} alt={alt} className={className} />;
+const CardImage = ({ src, alt, cardWidth, circleColor }) => {
+  if (!src) return null;
+
+  return (
+    <div
+      className={styles.cardImage}
+      data-card-width={cardWidth}
+      data-circle-color={circleColor}
+    >
+      <img src={src} alt={alt} loading="lazy" />
+    </div>
+  );
 };
