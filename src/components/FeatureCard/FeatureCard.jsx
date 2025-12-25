@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import Button from "../Button/Button";
 import styles from "./FeatureCard.module.scss";
+import { useNavigate } from "react-router-dom";
 
 const FeatureCard = ({
   id = "",
@@ -13,6 +14,7 @@ const FeatureCard = ({
   selected = null,
   onClick,
 }) => {
+  const navigate = useNavigate();
   const cardRef = useRef(null);
   const [cardWidth, setCardWidth] = useState(0);
 
@@ -30,6 +32,11 @@ const FeatureCard = ({
     return () => observer.disconnect();
   }, []);
 
+  const handleClick = () => {
+    if (!selected) onClick?.();
+    else navigate(`/product/${id}`);
+  };
+
   return (
     <div
       ref={cardRef}
@@ -42,7 +49,7 @@ const FeatureCard = ({
         ...(selected ? { backgroundColor: backgroundColor } : {}),
       }}
     >
-      <div className={styles.cardContent} onClick={onClick}>
+      <div className={styles.cardContent} onClick={handleClick}>
         {selected ? (
           <CardImage
             src={image}
