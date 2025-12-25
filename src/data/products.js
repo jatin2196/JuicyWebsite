@@ -1,7 +1,9 @@
 import cheekyLine from "../assets/images/cheeky-line.png";
 import orangeCrush from "../assets/images/orange-crush.png";
+import organgeFruit from "../assets/images/orange.png";
 import strawberryYum from "../assets/images/strawberry-yum.png";
 import blackberryBlast from "../assets/images/blackberry-blast.png";
+import blackberryFruit from "../assets/images/blackberry.png";
 
 export const products = [
   {
@@ -21,6 +23,7 @@ export const products = [
       "Discover a world of vibrant flavors with our premium juice selection.",
     numberColor: "#FF960D",
     image: orangeCrush,
+    flavourImage: organgeFruit,
     circleColor: "#FF960D",
     backgroundColor: "#DEBE6E4A",
     pageHeroBackground:
@@ -43,6 +46,7 @@ export const products = [
       "Discover a world of vibrant flavors with our premium juice selection.",
     numberColor: "#60449B",
     image: blackberryBlast,
+    flavourImage: blackberryFruit,
     circleColor: "#60449B",
     backgroundColor: "#947FBE4D",
     pageHeroBackground:
