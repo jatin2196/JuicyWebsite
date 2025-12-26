@@ -1,9 +1,14 @@
 .featureCards {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0;
+  left: 50%;
+  width: 100%;
   background-color: #f1f4f9;
+  z-index: 5;
+  transform: translateX(-50%);
 }
 
 .featureCard {

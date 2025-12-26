@@ -3,7 +3,7 @@ import { products } from "../data/products";
 import FeatureCard from "./FeatureCard/FeatureCard";
 import styles from "./FeatureCard/FeatureCard.module.scss";
 
-const FeatureCards = ({ setSelectedProductId }) => {
+const FeatureCards = () => {
   const [selectedId, setSelectedId] = useState(null);
 
   return (
@@ -14,7 +14,6 @@ const FeatureCards = ({ setSelectedProductId }) => {
           {...card}
           selected={selectedId === card.id}
           onClick={() => setSelectedId(card.id)}
-          onCardClick={() => setSelectedProductId(card.id)}
         />
       ))}
     </section>

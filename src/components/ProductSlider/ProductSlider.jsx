@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { products } from "../../data/products";
 import styles from "./ProductSlider.module.scss";
 import Header from "../Header/Header";
@@ -8,14 +8,34 @@ import Button from "../Button/Button";
 import { LeftArrowIcon } from "../../assets/icons/LeftArrowIcon";
 import { RightArrowIcon } from "../../assets/icons/RightArrowIcon";
 
-export default function ProductSlider({ id }) {
-  const params = useParams();
-  const selectedId = id || params.id;
+export default function ProductSlider() {
+  const getIdFromHash = () => {
+    const hash = window.location.hash || "";
+    if (hash.startsWith("#slide-")) {
+      return hash.replace("#slide-", "");
+    }
+    return "";
+  };
 
-  const selectedProduct = products.find((product) => product.id === selectedId);
+  const idFromHash = getIdFromHash();
+  const initialIndex = products.findIndex((p) => p.id === idFromHash);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  useEffect(() => {
+    const onHashChange = () => {
+      const id = getIdFromHash();
+      const idx = products.findIndex((p) => p.id === id);
+      setCurrentIndex(idx);
+    };
+    window.addEventListener("hashchange", onHashChange);
+    onHashChange();
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  const selectedProduct = currentIndex >= 0 ? products[currentIndex] : null;
 
   if (!selectedProduct) {
-    return <div>Product not found</div>;
+    return null;
   }
 
   const {
@@ -66,10 +86,21 @@ export default function ProductSlider({ id }) {
           </div>
 
           <ul className={styles.navigation}>
-            <li onClick={() => {}}>
+            <li
+              onClick={() => {
+                const prevIndex =
+                  (currentIndex - 1 + products.length) % products.length;
+                window.location.hash = `#slide-${products[prevIndex].id}`;
+              }}
+            >
               <LeftArrowIcon />
             </li>
-            <li onClick={() => {}}>
+            <li
+              onClick={() => {
+                const nextIndex = (currentIndex + 1) % products.length;
+                window.location.hash = `#slide-${products[nextIndex].id}`;
+              }}
+            >
               <RightArrowIcon />
             </li>
           </ul>

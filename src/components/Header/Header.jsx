@@ -16,7 +16,18 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <Link to="/" className={styles.logo}>Juicy</Link>
+        <Link
+          to={{ pathname: "/", hash: "" }}
+          className={styles.logo}
+          onClick={() => {
+            // Ensure hash is cleared so ProductSlider unmounts
+            if (typeof window !== "undefined") {
+              window.location.hash = "";
+            }
+          }}
+        >
+          Juicy
+        </Link>
 
         <nav
           className={styles.nav}

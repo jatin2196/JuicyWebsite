@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
 }
 
 .slideContent {
@@ -174,6 +175,7 @@
 }
 
 .navigation {
+  list-style: none;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -14,7 +14,6 @@ const FeatureCard = ({
   backgroundColor = "",
   selected = false,
   onClick,
-  onCardClick,
 }) => {
   const cardRef = useRef(null);
   const [cardWidth, setCardWidth] = useState(0);
@@ -33,7 +32,13 @@ const FeatureCard = ({
   }, []);
 
   const handleClick = () => {
-    selected ? onCardClick?.() : onClick?.();
+    if (selected) {
+      // Second click when selected: reveal slider by setting hash
+      window.location.hash = `#slide-${id}`;
+    } else {
+      // First click: select the card only
+      onClick?.();
+    }
   };
 
   return (
