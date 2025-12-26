@@ -8,6 +8,7 @@ import JuicyImage from "../../assets/images/juicy.png";
 import Button from "../Button/Button";
 import { LeftArrowIcon } from "../../assets/icons/LeftArrowIcon";
 import { RightArrowIcon } from "../../assets/icons/RightArrowIcon";
+import AnimatePresenceComponent from "../../animation/AnimationPresenceComponent";
 
 const MotionImg = motion.img;
 const MotionDiv = motion.div;
@@ -58,7 +59,7 @@ export default function ProductSlider() {
   const _description = slideDescription || description;
 
   return (
-    <>
+    <AnimatePresenceComponent>
       <Header />
       <div
         className={styles.slideHero}
@@ -195,6 +196,6 @@ export default function ProductSlider() {
           </motion.ul>
         </AnimatePresence>
       </div>
-    </>
+    </AnimatePresenceComponent>
   );
 }

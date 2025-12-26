@@ -124,9 +124,8 @@
   z-index: 5;
 
   .stitle {
-    font-family: Mina;
-    font-weight: 700;
-    font-style: Bold;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
     font-size: 46px;
     line-height: 100%;
     letter-spacing: 0%;
@@ -134,8 +133,8 @@
   }
 
   .sdescription {
-    font-family: IBM Plex Sans;
-    font-weight: 500;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 400;
     font-style: Medium;
     font-size: 18px;
     line-height: 26px;
@@ -166,9 +165,8 @@
     border-radius: 50%;
 
     p {
-      // font-family: Outfit;
+      font-family: "IBM Plex Sans", sans-serif;
       font-weight: 600;
-      // font-style: SemiBold;
       font-size: 16px;
       line-height: 20px;
       text-align: center;

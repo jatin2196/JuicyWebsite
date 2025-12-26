@@ -11,11 +11,15 @@ export const products = [
     title: "Cheeky lime",
     description:
       "Discover a world of vibrant flavors with our premium juice selection.",
+    slideDescription:
+      "Discover a world of vibrant flavors with our premium juice selection.",
     numberColor: "#30A100",
     image: cheekyLine,
     type: "green",
     cardCircleColor: "#A1CD57",
     backgroundColor: "#CFCF8D4D",
+    pageHeroBackground:
+      "radial-gradient(50% 50% at 50% 50%, #A1CD57 0%, #30A100 100%)",
     heroSlideCircleColor: "#A1CD57",
     slideCanCapacity: ["500 ML", "100 ML", "125 ML"],
   },
@@ -42,11 +46,15 @@ export const products = [
     title: "Strawberry Yum",
     description:
       "Discover a world of vibrant flavors with our premium juice selection.",
+    slideDescription:
+      "Discover a world of vibrant flavors with our premium juice selection.",
     numberColor: "#CD2520",
     image: strawberryYum,
     type: "strawberry",
     cardCircleColor: "#CD2520",
     backgroundColor: "#DC8D764A",
+    pageHeroBackground:
+      "radial-gradient(50% 50% at 50% 50%, #FF8A85 0%, #CD2520 100%)",
     heroSlideCircleColor: "#CD2520",
     slideCanCapacity: ["500 ML", "100 ML", "125 ML"],
   },
