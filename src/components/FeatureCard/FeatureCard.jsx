@@ -9,7 +9,7 @@ const FeatureCard = ({
   title = "",
   description = "",
   image = null,
-  circleColor = "",
+  cardCircleColor = "",
   backgroundColor = "",
   selected = null,
   onClick,
@@ -45,7 +45,7 @@ const FeatureCard = ({
       data-width={cardWidth}
       style={{
         "--card-width": `${cardWidth}px`,
-        "--circle-color": circleColor,
+        "--circle-color": cardCircleColor,
         ...(selected ? { backgroundColor: backgroundColor } : {}),
       }}
     >
@@ -55,7 +55,7 @@ const FeatureCard = ({
             src={image}
             alt={title}
             cardWidth={cardWidth}
-            circleColor={circleColor}
+            cardCircleColor={cardCircleColor}
           />
         ) : null}
 
@@ -75,14 +75,14 @@ const FeatureCard = ({
 
 export default FeatureCard;
 
-const CardImage = ({ src, alt, cardWidth, circleColor }) => {
+const CardImage = ({ src, alt, cardWidth, cardCircleColor }) => {
   if (!src) return null;
 
   return (
     <div
       className={styles.cardImage}
       data-card-width={cardWidth}
-      data-circle-color={circleColor}
+      data-circle-color={cardCircleColor}
     >
       <img src={src} alt={alt} loading="lazy" />
     </div>
