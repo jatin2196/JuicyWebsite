@@ -1,17 +1,18 @@
 import cx from "classnames";
 import { useParams } from "react-router-dom";
-import { products } from "../data/products";
-import styles from "../assets/styles/Product.module.scss";
-import Header from "../components/Header/Header";
-import JuicyImage from "../assets/images/juicy.png";
-import Button from "../components/Button/Button";
-import { LeftArrowIcon } from "../assets/icons/LeftArrowIcon";
-import { RightArrowIcon } from "../assets/icons/RightArrowIcon";
+import { products } from "../../data/products";
+import styles from "./ProductSlider.module.scss";
+import Header from "../Header/Header";
+import JuicyImage from "../../assets/images/juicy.png";
+import Button from "../Button/Button";
+import { LeftArrowIcon } from "../../assets/icons/LeftArrowIcon";
+import { RightArrowIcon } from "../../assets/icons/RightArrowIcon";
 
-export default function Product() {
+export default function ProductSlider({ id }) {
   const params = useParams();
+  const selectedId = id || params.id;
 
-  const selectedProduct = products.find((product) => product.id === params.id);
+  const selectedProduct = products.find((product) => product.id === selectedId);
 
   if (!selectedProduct) {
     return <div>Product not found</div>;

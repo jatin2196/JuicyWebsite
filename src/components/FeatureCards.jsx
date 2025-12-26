@@ -1,10 +1,10 @@
+import { useState } from "react";
 import { products } from "../data/products";
 import FeatureCard from "./FeatureCard/FeatureCard";
 import styles from "./FeatureCard/FeatureCard.module.scss";
-import { useState } from "react";
 
-const FeatureCards = () => {
-const [selectedId, setSelectedId] = useState(null);
+const FeatureCards = ({ setSelectedProductId }) => {
+  const [selectedId, setSelectedId] = useState(null);
 
   return (
     <section className={styles.featureCards}>
@@ -14,6 +14,7 @@ const [selectedId, setSelectedId] = useState(null);
           {...card}
           selected={selectedId === card.id}
           onClick={() => setSelectedId(card.id)}
+          onCardClick={() => setSelectedProductId(card.id)}
         />
       ))}
     </section>
