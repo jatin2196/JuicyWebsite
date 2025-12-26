@@ -5,6 +5,16 @@
   align-items: center;
   justify-content: center;
   z-index: 10;
+  overflow: hidden;
+}
+
+.slideBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
 .slideContent {
@@ -18,6 +28,7 @@
   justify-content: center;
   flex-direction: column;
   gap: 40px;
+  z-index: 1;
 }
 
 .slideLogo {
