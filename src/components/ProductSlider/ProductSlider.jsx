@@ -9,11 +9,13 @@ import Button from "../Button/Button";
 import { LeftArrowIcon } from "../../assets/icons/LeftArrowIcon";
 import { RightArrowIcon } from "../../assets/icons/RightArrowIcon";
 import AnimatePresenceComponent from "../../animation/AnimationPresenceComponent";
+/* removed useRef: using state for interaction gating */
 
 const MotionImg = motion.img;
 const MotionDiv = motion.div;
 
 export default function ProductSlider() {
+  const [hasInteracted, setHasInteracted] = useState(false);
   const getIdFromHash = () => {
     const hash = window.location.hash || "";
     if (hash.startsWith("#slide-")) {
@@ -57,6 +59,14 @@ export default function ProductSlider() {
   } = selectedProduct;
 
   const _description = slideDescription || description;
+
+  const imageInitial = hasInteracted
+    ? { x: window.innerWidth / 2.5, opacity: 0 }
+    : { x: 0, opacity: 1 };
+  const imageAnimate = { x: 0, opacity: 1 };
+  const imageExit = hasInteracted
+    ? { x: window.innerWidth / 2.5, opacity: 0 }
+    : { x: 0, opacity: 0 };
 
   return (
     <AnimatePresenceComponent>
@@ -107,9 +117,9 @@ export default function ProductSlider() {
                 key={selectedProduct.id}
                 src={image}
                 alt={title}
-                initial={{ x: window.innerWidth / 2.5, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: window.innerWidth / 2.5, opacity: 0 }}
+                initial={imageInitial}
+                animate={imageAnimate}
+                exit={imageExit}
                 transition={{
                   duration: 0.5,
                   ease: "easeIn",
@@ -129,6 +139,9 @@ export default function ProductSlider() {
                     style={{
                       backgroundImage: `url(${flavourImage})`,
                     }}
+                    initial={hasInteracted ? { opacity: 0 } : false}
+                    animate={{ opacity: 1 }}
+                    exit={hasInteracted ? { opacity: 0 } : false}
                     alt={title}
                   ></MotionDiv>
                 ))}
@@ -138,6 +151,7 @@ export default function ProductSlider() {
           <ul className={styles.navigation}>
             <li
               onClick={() => {
+                setHasInteracted(true);
                 setDirection("left");
                 const prevIndex =
                   (currentIndex - 1 + products.length) % products.length;
@@ -148,6 +162,7 @@ export default function ProductSlider() {
             </li>
             <li
               onClick={() => {
+                setHasInteracted(true);
                 setDirection("right");
                 const nextIndex = (currentIndex + 1) % products.length;
                 window.location.hash = `#slide-${products[nextIndex].id}`;
