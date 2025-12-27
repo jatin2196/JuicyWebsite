@@ -24,6 +24,7 @@ const FeatureCard = ({
   const prefersReducedMotion = useReducedMotion();
   const animationCompletedRef = useRef(false);
   const redirectTimeoutRef = useRef(null);
+  const animationProgressRef = useRef(0);
 
   useEffect(() => {
     return () => {
@@ -95,12 +96,10 @@ const FeatureCard = ({
           "--dynamic-opacity": dynamicOpacity,
           ...(selected ? { backgroundColor } : {}),
         }}
-        animate={
-          isAnimating && selected ? { x: [0, 125, animTargetX] } : { x: 0 }
-        }
+        animate={isAnimating && selected ? { x: animTargetX } : { x: 0 }}
         transition={
           isAnimating && selected
-            ? { duration: 1, times: [0, 0.35, 1], ease: "easeIn" }
+            ? { duration: 1, ease: "easeIn" }
             : { duration: 1, ease: "easeOut" }
         }
         // Track progress and trigger hash when we reach animTargetX
@@ -108,11 +107,19 @@ const FeatureCard = ({
         onUpdate={(latest) => {
           if (isAnimating && selected) {
             const currentX = typeof latest.x === "number" ? latest.x : 0;
-            const total = Math.max(Math.abs(animTargetX), 1);
-            const progress = Math.min(Math.abs(currentX) / total, 1);
+            // Linear progress: 0 to 1 as we go from 0 to animTargetX
+            const progress =
+              animTargetX !== 0
+                ? Math.min(Math.abs(currentX / animTargetX), 1)
+                : 0;
+
+            animationProgressRef.current = progress;
+
             const next = Math.max(1 - progress, 0);
             if (next !== dynamicOpacity) setDynamicOpacity(next);
+
             const cover = computeCoverScale();
+            // Scale smoothly from 0 to cover value as animation progresses
             const nextScale = progress * cover;
             if (Math.abs(nextScale - overlayScale) > 0.002)
               setOverlayScale(nextScale);
@@ -127,17 +134,17 @@ const FeatureCard = ({
               isAnimating &&
               selected &&
               !animationCompletedRef.current &&
-              latest.x?.[2] === animTargetX,
+              latest.x === animTargetX,
           });
 
           if (
             isAnimating &&
             selected &&
             !animationCompletedRef.current &&
-            latest.x?.[2] === animTargetX
+            latest.x === animTargetX
           ) {
             animationCompletedRef.current = true;
-            setTimeout(() => {
+            redirectTimeoutRef.current = setTimeout(() => {
               window.location.hash = `#slide-${id}`;
             }, 400);
           }
