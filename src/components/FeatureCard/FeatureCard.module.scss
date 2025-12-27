@@ -18,7 +18,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 16px 30px;
+  padding: 16px 0;
   // overflow: hidden;
   transition: transform 0.6s linear, opacity 0.4s linear;
   z-index: 10;
@@ -26,7 +26,7 @@
 
 .cardContent {
   width: 100%;
-  max-width: 253px;
+  // max-width: 253px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,7 +35,7 @@
   cursor: pointer;
   flex-shrink: 0;
   gap: 0;
-  padding: 0 16px;
+  padding: 0 46px;
   will-change: transform;
 }
 

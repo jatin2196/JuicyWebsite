@@ -22,7 +22,7 @@ const FeatureCard = ({
   const [cardWidth, setCardWidth] = useState(0);
   const [animTargetX, setAnimTargetX] = useState(0);
   const [dynamicOpacity, setDynamicOpacity] = useState(1);
-  const [overlayScale, setOverlayScale] = useState(1.25);
+  const [overlayScale, setOverlayScale] = useState(1);
   const prefersReducedMotion = useReducedMotion();
   const animationCompletedRef = useRef(false);
   const redirectTimeoutRef = useRef(null);
@@ -40,7 +40,7 @@ const FeatureCard = ({
       setIsAnimating(false);
       setAnimTargetX(0);
       setDynamicOpacity(1);
-      setOverlayScale(1.25);
+      setOverlayScale(1);
       animStartRef.current = null;
       wasAnimatingRef.current = false;
       animationCompletedRef.current = false;
@@ -160,7 +160,7 @@ const FeatureCard = ({
               setOverlayScale((prev) => prev + (targetScale - prev) * 0.12);
             }
           } else {
-            if (overlayScale !== 1.25) setOverlayScale(1.25);
+            if (overlayScale !== 1) setOverlayScale(1);
             animStartRef.current = null;
             wasAnimatingRef.current = false;
           }
@@ -297,8 +297,8 @@ const CardImage = ({
           isAnimating
             ? { scale: overlayScale }
             : selected
-            ? { scale: [0.75, 1.25] }
-            : { scale: 0.75 }
+            ? { scale: [0.5, 1] }
+            : { scale: 0.5 }
         }
         transition={
           isAnimating
