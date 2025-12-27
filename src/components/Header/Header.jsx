@@ -29,12 +29,7 @@ const Header = () => {
           Juicy
         </Link>
 
-        <nav
-          className={styles.nav}
-          style={{
-            display: window.innerWidth > 768 ? "flex" : "none",
-          }}
-        >
+        <nav className={styles.nav}>
           {menuLinks.map((link) => (
             <a
               key={link.label}

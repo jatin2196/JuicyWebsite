@@ -2,8 +2,8 @@ export const CartIcon = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="33"
-      height="36"
+      width="1.72vw"
+      height="1.88vw"
       viewBox="0 0 33 36"
       fill="none"
       {...props}

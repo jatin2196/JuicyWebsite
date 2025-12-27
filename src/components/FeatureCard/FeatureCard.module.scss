@@ -1,7 +1,8 @@
 // vw helper: convert px to vw based on a 1440px desktop base
-$vw-base: 1440;
+$vw-base: 1920;
 @function vw($px, $base: $vw-base) {
-  @return ($px / $base) * 100vw;
+  $value: ($px / $base) * 100;
+  @return round($value * 100) / 100 * 1vw;
 }
 
 .featureCards {
@@ -121,56 +122,4 @@ $vw-base: 1440;
   font-weight: 400;
   line-height: vw(26);
   margin-bottom: vw(16);
-}
-
-@media (min-width: 1025px) and (max-width: 1200px) {
-  .cardNumber {
-    font-size: 39.6px;
-    line-height: 46.8px;
-  }
-
-  .cardTitle {
-    font-size: 19.8px;
-    line-height: 25.2px;
-  }
-
-  .cardDescription {
-    font-size: 16.2px;
-    line-height: 23.4px;
-  }
-
-  .cardImage {
-    max-width: clamp(170px, 17vw, 210px);
-    max-height: clamp(260px, 55vh, 580px);
-
-    img {
-      max-height: clamp(260px, 55vh, 580px);
-    }
-  }
-}
-
-@media (max-width: 1024px) {
-  .cardNumber {
-    font-size: 35.2px;
-    line-height: 41.6px;
-  }
-
-  .cardTitle {
-    font-size: 17.6px;
-    line-height: 22.4px;
-  }
-
-  .cardDescription {
-    font-size: 14.4px;
-    line-height: 20.8px;
-  }
-
-  .cardImage {
-    max-width: clamp(140px, 14vw, 180px);
-    max-height: clamp(220px, 45vh, 480px);
-
-    img {
-      max-height: clamp(220px, 45vh, 480px);
-    }
-  }
 }

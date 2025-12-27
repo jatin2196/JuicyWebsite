@@ -1,7 +1,8 @@
 // vw helper: convert px to vw based on a 1440px desktop base
-$vw-base: 1940;
+$vw-base: 1920;
 @function vw($px, $base: $vw-base) {
-  @return ($px / $base) * 100vw;
+  $value: ($px / $base) * 100;
+  @return round($value * 100) / 100 * 1vw;
 }
 
 .slideHero {

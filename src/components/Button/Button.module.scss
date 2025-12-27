@@ -1,12 +1,16 @@
 // vw helper: convert px to vw based on a 1440px desktop base
-$vw-base: 1440;
+$vw-base: 1920;
 @function vw($px, $base: $vw-base) {
-  @return ($px / $base) * 100vw;
+  $value: ($px / $base) * 100;
+  @return round($value * 100) / 100 * 1vw;
 }
 
 .button {
   position: relative;
   padding: vw(8) vw(16);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
   border-radius: vw(20);
   cursor: pointer;
@@ -26,6 +30,8 @@ $vw-base: 1440;
   }
 
   &:not(.green, .blackberry, .strawberry, .orange) {
+    width: vw(80);
+    height: vw(35);
     color: #242f4b;
     background-color: #f1f4f9;
   }
@@ -35,6 +41,7 @@ $vw-base: 1440;
   &.orange,
   &.blackberry {
     width: vw(166);
+    height: vw(44);
     padding: vw(12) vw(16);
     border-radius: vw(30);
     box-shadow: 0vw vw(-7) vw(9) 0vw #00000040;

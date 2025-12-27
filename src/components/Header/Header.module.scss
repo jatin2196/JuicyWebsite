@@ -1,7 +1,8 @@
 // vw helper: convert px to vw based on a 1440px desktop base
-$vw-base: 1440;
+$vw-base: 1920;
 @function vw($px, $base: $vw-base) {
-  @return ($px / $base) * 100vw;
+  $value: ($px / $base) * 100;
+  @return round($value * 100) / 100 * 1vw;
 }
 
 .header {
@@ -30,8 +31,7 @@ $vw-base: 1440;
 
 /* Typography base */
 .logo,
-.navLink,
-.mobileNavLink {
+.navLink {
   font-family: "IBM Plex Sans", sans-serif;
   color: #fff;
 }
@@ -79,7 +79,7 @@ $vw-base: 1440;
   border: none;
   color: white;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: vw(8);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -104,51 +104,9 @@ $vw-base: 1440;
   color: white;
   border: vw(2) solid #7c3aed;
 
-  font-size: 0.7rem;
+  font-size: vw(11.2);
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-/* Mobile Menu Button */
-.mobileMenuButton {
-  display: none;
-  background: transparent;
-  border: none;
-  color: white;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-
-/* Mobile Navigation */
-.mobileNav {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-
-  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-  padding: 2rem;
-
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* Mobile Nav Link */
-.mobileNavLink {
-  font-size: 1.5rem;
-  font-weight: 600;
-  text-decoration: none;
-  padding: 1rem 0;
-}
-
-/* Close Button */
-.closeButton {
-  align-self: flex-end;
-  background: transparent;
-  border: none;
-  color: white;
-  cursor: pointer;
-  padding: 0.5rem;
 }
