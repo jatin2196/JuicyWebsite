@@ -8,7 +8,7 @@ $vw-base: 1920;
 .featureCards {
   position: absolute;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 0;
   left: 50%;
@@ -21,6 +21,7 @@ $vw-base: 1920;
 }
 
 .featureCard {
+  flex: 1 1 auto;
   width: auto;
   min-height: 100vh;
   display: flex;
@@ -118,6 +119,7 @@ $vw-base: 1920;
 
 .cardDescription {
   width: 100%;
+  max-width: vw(219);
   font-size: vw(18);
   font-weight: 400;
   line-height: vw(26);
