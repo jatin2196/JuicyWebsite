@@ -17,10 +17,9 @@
 
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: 22.222vw;
   min-height: 100vh;
-  font-size: 16px;
+  font-size: 1.111vw;
   background-color: #f1f4f9;
   color: #292d32;
-  overflow-x: hidden;
 }

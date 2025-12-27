@@ -1,3 +1,9 @@
+// vw helper: convert px to vw based on a 1440px desktop base
+$vw-base: 1440;
+@function vw($px, $base: $vw-base) {
+  @return ($px / $base) * 100vw;
+}
+
 .featureCards {
   position: absolute;
   display: flex;
@@ -19,7 +25,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 16px 0;
+  padding: vw(16) 0;
   // overflow: hidden;
   transition: transform 0.6s linear, opacity 0.4s linear;
   z-index: 10;
@@ -36,16 +42,16 @@
   cursor: pointer;
   flex-shrink: 0;
   gap: 0;
-  padding: 0 46px;
+  padding: 0 vw(46);
   will-change: transform;
 }
 
 .cardImage {
   position: relative;
   width: 100%;
-  max-width: clamp(180px, 18vw, 220px);
-  height: auto;
-  max-height: clamp(280px, 60vh, 640px);
+  max-width: clamp(vw(180), 18vw, vw(220));
+  height: "auto";
+  max-height: clamp(vw(280), 60vh, vw(640));
   margin: 0 auto;
   // overflow: hidden;
   will-change: transform, opacity;
@@ -57,7 +63,7 @@
     width: 100%;
     max-width: 100%;
     height: auto;
-    max-height: clamp(280px, 60vh, 640px);
+    max-height: clamp(vw(280), 60vh, vw(640));
     object-fit: contain;
     z-index: 2;
   }
@@ -95,26 +101,26 @@
 
 .cardNumber {
   width: 100%;
-  font-size: 44px;
+  font-size: vw(44);
   font-weight: 500;
-  line-height: 52px;
-  margin-bottom: 20px;
+  line-height: vw(52);
+  margin-bottom: vw(20);
 }
 
 .cardTitle {
   width: 100%;
-  font-size: 22px;
+  font-size: vw(22);
   font-weight: 700;
-  line-height: 28px;
-  margin-bottom: 20px;
+  line-height: vw(28);
+  margin-bottom: vw(20);
 }
 
 .cardDescription {
   width: 100%;
-  font-size: 18px;
+  font-size: vw(18);
   font-weight: 400;
-  line-height: 26px;
-  margin-bottom: 16px;
+  line-height: vw(26);
+  margin-bottom: vw(16);
 }
 
 @media (min-width: 1025px) and (max-width: 1200px) {

@@ -1,3 +1,9 @@
+// vw helper: convert px to vw based on a 1440px desktop base
+$vw-base: 1940;
+@function vw($px, $base: $vw-base) {
+  @return ($px / $base) * 100vw;
+}
+
 .slideHero {
   position: relative;
   min-height: 100vh;
@@ -20,21 +26,21 @@
 .slideContent {
   position: relative;
   width: 100%;
-  max-width: 1350px;
+  max-width: vw(1350);
   min-height: 100vh;
-  padding: 80px 16px 16px;
+  padding: vw(80) vw(16) vw(16);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 40px;
+  gap: vw(40);
   z-index: 1;
 }
 
 .slideLogo {
   position: absolute;
   width: 100%;
-  max-width: 949px;
+  max-width: vw(949);
   display: flex;
   height: auto;
   left: 50%;
@@ -47,9 +53,9 @@
 .slideImage {
   position: relative;
   width: 100%;
-  max-width: 261px;
+  max-width: vw(261);
   height: 100%;
-  max-height: 640px;
+  max-height: vw(640);
   display: flex;
   height: auto;
   margin: 0 auto;
@@ -71,8 +77,8 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  max-width: 400px;
-  max-height: 400px;
+  max-width: vw(400);
+  max-height: vw(400);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -82,31 +88,31 @@
 }
 
 .fI1 {
-  width: 119.93506518753573px;
-  height: 92.25851419847113px;
+  width: vw(119.93506518753573);
+  height: vw(92.25851419847113);
   top: 34%;
   left: -40%;
 }
 
 .fI2 {
-  width: 245.25185979692455px;
-  height: 188.65682941309714px;
+  width: vw(245.25185979692455);
+  height: vw(188.65682941309714);
   opacity: 1;
   top: 22%;
   left: 60%;
 }
 
 .fI3 {
-  width: 245.25185979692455px;
-  height: 188.65682941309714px;
+  width: vw(245.25185979692455);
+  height: vw(188.65682941309714);
   opacity: 1;
   top: 66%;
   left: -61%;
 }
 
 .fI4 {
-  width: 119.93506518753573px;
-  height: 92.25851419847113px;
+  width: vw(119.93506518753573);
+  height: vw(92.25851419847113);
   opacity: 1;
   top: 64%;
   left: 70%;
@@ -114,19 +120,19 @@
 
 .slideInfo {
   position: absolute;
-  left: 16px;
-  bottom: 24px;
+  left: vw(16);
+  bottom: vw(24);
   width: 100%;
-  max-width: 455px;
+  max-width: vw(455);
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: vw(24);
   z-index: 5;
 
   .stitle {
     font-family: "IBM Plex Sans", sans-serif;
     font-weight: 600;
-    font-size: 46px;
+    font-size: vw(46);
     line-height: 100%;
     letter-spacing: 0%;
     color: #fff;
@@ -135,10 +141,8 @@
   .sdescription {
     font-family: "IBM Plex Sans", sans-serif;
     font-weight: 400;
-    font-style: Medium;
-    font-size: 18px;
-    line-height: 26px;
-    letter-spacing: 0%;
+    font-size: vw(18);
+    line-height: vw(26);
     color: #ffffffd6;
   }
 }
@@ -147,18 +151,18 @@
   list-style: none;
   position: absolute;
   top: 50%;
-  right: 16px;
+  right: vw(16);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: vw(16);
   transform: translateY(-50%);
 
   li {
-    width: 71px;
-    height: 71px;
-    padding: 10px;
+    width: vw(71);
+    height: vw(71);
+    padding: vw(10);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -167,8 +171,8 @@
     p {
       font-family: "IBM Plex Sans", sans-serif;
       font-weight: 600;
-      font-size: 16px;
-      line-height: 20px;
+      font-size: vw(16);
+      line-height: vw(20);
       text-align: center;
       color: #fff;
     }
@@ -188,7 +192,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: vw(16);
 
   li {
     cursor: pointer;

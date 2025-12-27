@@ -1,21 +1,27 @@
+// vw helper: convert px to vw based on a 1440px desktop base
+$vw-base: 1440;
+@function vw($px, $base: $vw-base) {
+  @return ($px / $base) * 100vw;
+}
+
 .button {
   position: relative;
-  padding: 8px 16px;
+  padding: vw(8) vw(16);
   border: none;
-  border-radius: 20px;
+  border-radius: vw(20);
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 vw(2) vw(8) rgba(0, 0, 0, 0.08);
   z-index: 0;
 
   &::before {
     content: "";
     position: absolute;
-    width: calc(100% - 4px);
-    height: calc(100% - 4px);
-    top: 2px;
-    left: 2px;
-    border-radius: 20px;
+    width: calc(100% - vw(4));
+    height: calc(100% - vw(4));
+    top: vw(2);
+    left: vw(2);
+    border-radius: vw(20);
     z-index: 1;
   }
 
@@ -23,15 +29,18 @@
     color: #242f4b;
     background-color: #f1f4f9;
   }
-  
-  &.green, &.strawberry, &.orange, &.blackberry {
-    width: 166px;
-    padding: 12px 16px;
-    border-radius: 30px;
-    box-shadow: 0px -7px 9px 0px #00000040;
+
+  &.green,
+  &.strawberry,
+  &.orange,
+  &.blackberry {
+    width: vw(166);
+    padding: vw(12) vw(16);
+    border-radius: vw(30);
+    box-shadow: 0vw vw(-7) vw(9) 0vw #00000040;
 
     &::before {
-      border-radius: 30px;
+      border-radius: vw(30);
     }
   }
 
@@ -51,17 +60,17 @@
   }
 
   &.orange {
-    color: #0B0909;
-    background: linear-gradient(180deg, #ffffff 2px, #FAC996 35%);
+    color: #0b0909;
+    background: linear-gradient(180deg, #ffffff 2px, #fac996 35%);
 
     &::before {
-      background-color: #FAC996;
+      background-color: #fac996;
     }
   }
 
   &:hover {
     background-color: #e6edf5;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 vw(4) vw(12) rgba(0, 0, 0, 0.12);
   }
 
   &:active {
@@ -76,7 +85,7 @@
 
 .text {
   position: relative;
-  font-size: 16px;
+  font-size: vw(16);
   font-weight: 500;
   font-family: "IBM Plex Sans", system-ui, sans-serif;
   z-index: 2;
