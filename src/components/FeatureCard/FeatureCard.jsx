@@ -47,6 +47,53 @@ const FeatureCard = ({
     };
   }, []);
 
+  // Redirect to ProductSlider when animation completes
+  useEffect(() => {
+    if (isAnimating && selected) {
+      // Clear any existing timeout
+      if (redirectTimeoutRef.current) {
+        clearTimeout(redirectTimeoutRef.current);
+      }
+
+      const startTime = performance.now();
+      const duration = 1400; // Total time until redirect
+
+      // Animate overlay scale and opacity until redirect
+      const animate = () => {
+        const elapsed = performance.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Scale overlay to cover viewport
+        const cover = computeCoverScale();
+        const currentScale = 0.95 + (cover - 0.95) * Math.pow(progress, 2);
+        setOverlayScale(currentScale);
+
+        // Reduce opacity gradually
+        const currentOpacity = Math.max(1 - progress * 0.9, 0.15);
+        if (currentOpacity !== dynamicOpacity)
+          setDynamicOpacity(currentOpacity);
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+
+      requestAnimationFrame(animate);
+
+      // Redirect after animation duration
+      redirectTimeoutRef.current = setTimeout(() => {
+        window.location.hash = `#slide-${id}`;
+        animationCompletedRef.current = true;
+      }, duration);
+    }
+    return () => {
+      if (redirectTimeoutRef.current) {
+        clearTimeout(redirectTimeoutRef.current);
+        redirectTimeoutRef.current = null;
+      }
+    };
+  }, [isAnimating, selected, id]);
+
   const computeCoverScale = () => {
     if (typeof window === "undefined") return 0;
     const viewportMax = Math.max(
@@ -82,9 +129,6 @@ const FeatureCard = ({
         : -(window.innerWidth / 2 - cardWidth / 2);
       setAnimTargetX(targetX);
       setIsAnimating(true);
-      // setTimeout(() => {
-      //   window.location.hash = `#slide-${id}`;
-      // }, 500);
     } else {
       onClick?.();
       setIsAnimating(false);
@@ -179,7 +223,7 @@ const FeatureCard = ({
           className={styles.cardContent}
           onClick={handleClick}
           initial={false}
-          animate={{ y: selected ? 32 : 0 }}
+          animate={{ y: 0 }}
           transition={
             prefersReducedMotion
               ? { duration: 0.5 }
@@ -206,7 +250,7 @@ const FeatureCard = ({
           <motion.div
             initial={false}
             animate={{
-              y: 0,
+              y: selected ? 0 : -32,
               opacity: isAnimating && selected ? dynamicOpacity : 1,
               ...(isAnimating && selected
                 ? {
