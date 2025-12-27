@@ -7,7 +7,7 @@ $vw-base: 1920;
 
 .header {
   width: 100%;
-  padding: vw(20); // 42px;
+  padding: vw(20) vw(42); // 42px;
   // background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
   position: fixed;
   top: 0;
@@ -21,7 +21,7 @@ $vw-base: 1920;
 
 .container {
   width: 100%;
-  max-width: vw(1400);
+  // max-width: vw(1400);
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -39,7 +39,7 @@ $vw-base: 1920;
 /* Logo */
 .logo {
   text-decoration: none;
-  font-size: vw(31);
+  font-size: vw(32);
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -53,7 +53,7 @@ $vw-base: 1920;
 }
 
 .navLink {
-  font-size: vw(16);
+  font-size: vw(18);
   font-weight: 400;
   text-decoration: none;
   cursor: pointer;
