@@ -6,6 +6,7 @@ import AnimatePresenceComponent from "../animation/AnimationPresenceComponent";
 
 const FeatureCards = () => {
   const [selectedId, setSelectedId] = useState(null);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   return (
     <AnimatePresenceComponent>
@@ -15,7 +16,12 @@ const FeatureCards = () => {
             key={card.id}
             {...card}
             selected={selectedId === card.id}
+            makeSiblingFading={
+              selectedId && selectedId !== card.id && isAnimating
+            }
             onClick={() => setSelectedId(card.id)}
+            setIsAnimating={setIsAnimating}
+            isAnimating={isAnimating}
           />
         ))}
       </section>

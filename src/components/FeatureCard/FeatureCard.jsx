@@ -13,11 +13,13 @@ const FeatureCard = ({
   cardCircleColor = "",
   backgroundColor = "",
   selected = false,
-  onClick,
+  onClick = null,
+  isAnimating = false,
+  setIsAnimating = () => {},
+  makeSiblingFading = false,
 }) => {
   const cardRef = useRef(null);
   const [cardWidth, setCardWidth] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
   const [animTargetX, setAnimTargetX] = useState(0);
   const [dynamicOpacity, setDynamicOpacity] = useState(1);
   const [overlayScale, setOverlayScale] = useState(0);
@@ -96,11 +98,14 @@ const FeatureCard = ({
           "--dynamic-opacity": dynamicOpacity,
           ...(selected ? { backgroundColor } : {}),
         }}
-        animate={isAnimating && selected ? { x: animTargetX } : { x: 0 }}
+        animate={{
+          x: isAnimating && selected ? animTargetX : 0,
+          ...(makeSiblingFading ? { opacity: 0, zIndex: -1 } : {}),
+        }}
         transition={
           isAnimating && selected
             ? { duration: 1, ease: "easeIn" }
-            : { duration: 1, ease: "easeOut" }
+            : { duration: 0.4, ease: "easeOut" }
         }
         // Track progress and trigger hash when we reach animTargetX
         // As the card slides, compute progress toward animTargetX and reduce dynamicOpacity; scale overlay to cover viewport
@@ -115,7 +120,7 @@ const FeatureCard = ({
 
             animationProgressRef.current = progress;
 
-            const next = Math.max(1 - progress, 0);
+            const next = Math.max(1 - progress * 0.9, 0.15);
             if (next !== dynamicOpacity) setDynamicOpacity(next);
 
             const cover = computeCoverScale();
@@ -128,21 +133,7 @@ const FeatureCard = ({
           }
         }}
         onAnimationComplete={(latest) => {
-          console.log("Animation complete:", {
-            latest,
-            flag:
-              isAnimating &&
-              selected &&
-              !animationCompletedRef.current &&
-              latest.x === animTargetX,
-          });
-
-          if (
-            isAnimating &&
-            selected &&
-            !animationCompletedRef.current &&
-            latest.x === animTargetX
-          ) {
+          if (isAnimating && selected && !animationCompletedRef.current) {
             animationCompletedRef.current = true;
             redirectTimeoutRef.current = setTimeout(() => {
               window.location.hash = `#slide-${id}`;
@@ -262,8 +253,8 @@ const CardImage = ({
         initial={false}
         transition={
           prefersReducedMotion
-            ? { duration: 0.5 }
-            : { type: "tween", ease: "linear", duration: 0.6 }
+            ? { duration: 1 }
+            : { type: "tween", ease: "linear", duration: 1 }
         }
         style={{
           position: "absolute",
@@ -272,7 +263,7 @@ const CardImage = ({
           width: `${cardWidth || 220}px`,
           height: `${cardWidth || 220}px`,
           backgroundColor: circleColor,
-          opacity: dynamicOpacity < 0.25 ? dynamicOpacity : 1,
+          opacity: 1,
           borderRadius: "50%",
           transformOrigin: origin,
           zIndex: 1,
