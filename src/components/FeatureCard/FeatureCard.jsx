@@ -22,11 +22,13 @@ const FeatureCard = ({
   const [cardWidth, setCardWidth] = useState(0);
   const [animTargetX, setAnimTargetX] = useState(0);
   const [dynamicOpacity, setDynamicOpacity] = useState(1);
-  const [overlayScale, setOverlayScale] = useState(0);
+  const [overlayScale, setOverlayScale] = useState(1.25);
   const prefersReducedMotion = useReducedMotion();
   const animationCompletedRef = useRef(false);
   const redirectTimeoutRef = useRef(null);
   const animationProgressRef = useRef(0);
+  const animStartRef = useRef(null);
+  const wasAnimatingRef = useRef(false);
 
   useEffect(() => {
     return () => {
@@ -38,7 +40,9 @@ const FeatureCard = ({
       setIsAnimating(false);
       setAnimTargetX(0);
       setDynamicOpacity(1);
-      setOverlayScale(0);
+      setOverlayScale(1.25);
+      animStartRef.current = null;
+      wasAnimatingRef.current = false;
       animationCompletedRef.current = false;
     };
   }, []);
@@ -111,6 +115,13 @@ const FeatureCard = ({
         // As the card slides, compute progress toward animTargetX and reduce dynamicOpacity; scale overlay to cover viewport
         onUpdate={(latest) => {
           if (isAnimating && selected) {
+            if (
+              animStartRef.current === null &&
+              typeof performance !== "undefined"
+            ) {
+              animStartRef.current = performance.now();
+            }
+
             const currentX = typeof latest.x === "number" ? latest.x : 0;
             // Linear progress: 0 to 1 as we go from 0 to animTargetX
             const progress =
@@ -124,17 +135,40 @@ const FeatureCard = ({
             if (next !== dynamicOpacity) setDynamicOpacity(next);
 
             const cover = computeCoverScale();
-            // Scale smoothly from 0 to cover value as animation progresses
-            const nextScale = progress * cover;
-            if (Math.abs(nextScale - overlayScale) > 0.002)
-              setOverlayScale(nextScale);
+            // First shrink a bit, then grow to cover
+            const startScale = 1;
+            const dipScale = startScale * 0.95; // 5% dip
+            const dipPoint = 0.2; // 20% of the motion duration
+
+            let targetScale = startScale;
+            if (progress < dipPoint) {
+              const t = progress / dipPoint;
+              targetScale = startScale - (startScale - dipScale) * t;
+            } else {
+              const t = (progress - dipPoint) / (1 - dipPoint);
+              const eased = Math.pow(Math.max(t, 0), 2.2); // smoother ease-in grow
+              targetScale = dipScale + (cover - dipScale) * eased;
+            }
+
+            targetScale = Math.max(targetScale, 0.01);
+
+            // On the first animated frame, jump to startScale so we can visibly dip before rising
+            if (!wasAnimatingRef.current) {
+              wasAnimatingRef.current = true;
+              setOverlayScale(startScale);
+            } else {
+              setOverlayScale((prev) => prev + (targetScale - prev) * 0.12);
+            }
           } else {
-            if (overlayScale !== 0) setOverlayScale(0);
+            if (overlayScale !== 1.25) setOverlayScale(1.25);
+            animStartRef.current = null;
+            wasAnimatingRef.current = false;
           }
         }}
         onAnimationComplete={(latest) => {
           if (isAnimating && selected && !animationCompletedRef.current) {
             animationCompletedRef.current = true;
+            animStartRef.current = null;
             redirectTimeoutRef.current = setTimeout(() => {
               window.location.hash = `#slide-${id}`;
             }, 400);
@@ -174,16 +208,24 @@ const FeatureCard = ({
             animate={{
               y: 0,
               opacity: isAnimating && selected ? dynamicOpacity : 1,
+              ...(isAnimating && selected
+                ? {
+                    zIndex: 10,
+                  }
+                : {}),
             }}
             transition={
               prefersReducedMotion
                 ? { duration: 0.5 }
                 : {
-                    type: "spring",
-                    stiffness: 140,
-                    damping: 22,
-                    mass: 1,
-                    duration: 0.5,
+                    y: {
+                      type: "spring",
+                      stiffness: 140,
+                      damping: 22,
+                      mass: 1,
+                      duration: 0.5,
+                    },
+                    opacity: { duration: 0.15, ease: "linear" },
                   }
             }
           >
@@ -251,10 +293,21 @@ const CardImage = ({
       <motion.div
         className={styles.coverCircle}
         initial={false}
+        animate={
+          isAnimating
+            ? { scale: overlayScale }
+            : selected
+            ? { scale: [0.75, 1.25] }
+            : { scale: 0.75 }
+        }
         transition={
-          prefersReducedMotion
-            ? { duration: 1 }
-            : { type: "tween", ease: "linear", duration: 1 }
+          isAnimating
+            ? prefersReducedMotion
+              ? { duration: 0.25 }
+              : { type: "tween", ease: "linear", duration: 0.25 }
+            : prefersReducedMotion
+            ? { duration: 0.5 }
+            : { duration: 0.5, ease: "easeOut" }
         }
         style={{
           position: "absolute",
@@ -268,7 +321,8 @@ const CardImage = ({
           transformOrigin: origin,
           zIndex: 1,
           pointerEvents: "none",
-          transform: `translate(-50%, -50%) scale(${overlayScale})`,
+          translateX: "-50%",
+          translateY: "-50%",
         }}
       />
       <motion.img
